@@ -1,0 +1,67 @@
+{
+  "model_type": "XGBoost",
+  "training_date": "2025-11-24T13:31:13",
+  "metrics": {
+    "mae_test": 4.803,
+    "accuracy_pm2_days": 0.31579,
+    "mae_cv": 6.049,
+    "description": "Mean Absolute Error (MAE) показывает среднюю ошибку в днях. Точность ±2 дня показывает долю предсказаний, попавших в интервал ±2 дня от реального значения.",
+    "note": "Низкая точность связана с малым размером обучающей выборки (186 записей). Требуется больше данных или feature engineering для достижения целевой точности ≥70%."
+  },
+  "best_parameters": {
+    "colsample_bytree": 1.0,
+    "learning_rate": 0.05,
+    "max_depth": 8,
+    "n_estimators": 300,
+    "reg_lambda": 1,
+    "subsample": 1.0
+  },
+  "features": {
+    "numeric_features": [
+      "temp_max_mean",
+      "temp_max_min",
+      "temp_max_max",
+      "temp_max_std",
+      "n_measurements",
+      "to_stock_tons_daily",
+      "from_stock_tons_daily",
+      "net_flow",
+      "stock_tons",
+      "temp_air_mean",
+      "temp_air_min",
+      "temp_air_max",
+      "humidity_mean",
+      "precip_sum",
+      "wind_avg_mean",
+      "wind_max_max",
+      "cloudcover_mean",
+      "visibility_mean"
+    ],
+    "categorical_features": [
+      "coal_grade",
+      "stockyard"
+    ],
+    "note": "Категориальные признаки location и shift не использовались из-за отсутствия в данных"
+  },
+  "training_data": {
+    "total_samples": 186,
+    "train_samples": 148,
+    "test_samples": 38,
+    "train_test_split": 0.2,
+    "cv_folds": 5,
+    "max_horizon_days": 30,
+    "note": "Малый размер выборки (186 записей) является основной причиной низкой точности модели"
+  },
+  "model_file": "fire_prediction_model.pkl",
+  "version": "1.0.0",
+  "status": "trained",
+  "warnings": [
+    "RuntimeWarnings при обучении связаны с константными признаками в некоторых фолдах CV - не критично",
+    "Точность ±2 дня составляет 31.58%, что значительно ниже целевого значения 70%",
+    "Для улучшения точности рекомендуется:",
+    "  1. Собрать больше данных о возгораниях",
+    "  2. Добавить дополнительные признаки (location, shift если доступны)",
+    "  3. Провести feature engineering (временные признаки, лаги, скользящие средние)",
+    "  4. Рассмотреть другие алгоритмы или ансамбли моделей"
+  ]
+}
